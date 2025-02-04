@@ -2,21 +2,18 @@ name: Build Python App for macOS M1
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 jobs:
   build:
     runs-on: macos-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
@@ -24,12 +21,17 @@ jobs:
         run: |
           arch -arm64 python -m pip install --upgrade pip
           arch -arm64 pip install -r requirements.txt
+          arch -arm64 pip install pyinstaller
 
       - name: Build executable
-        run: arch -arm64 pyinstaller --onefile setup.py
+        run: |
+          arch -arm64 pyinstaller --onefile \
+            --distpath ./dist \
+            --name "app_${GITHUB_REF_NAME}_macos_arm64" \
+            setup.py
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: mac-m1-build
-          path: dist/setup
+          name: app_${{ github.ref_name }}_macos_arm64
+          path: dist/app_${{ github.ref_name }}_macos_arm64
