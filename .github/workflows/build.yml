@@ -31,7 +31,7 @@ jobs:
           arch -${{ matrix.arch }} pyinstaller --onefile \
             --distpath ./dist \
             --name "app_${GITHUB_REF_NAME}_macos_${{ matrix.arch }}" \
-            src/setup.py
+            src/main.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
