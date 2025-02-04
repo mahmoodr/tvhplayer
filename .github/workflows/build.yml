@@ -4,10 +4,11 @@ on:
   push:
     tags:
       - 'v*'
-
 jobs:
   build-macos:
     runs-on: macos-latest
+    env:
+      VERSION: ${{ github.ref_name }}
     strategy:
       matrix:
         arch: [x86_64, arm64]
@@ -70,7 +71,7 @@ jobs:
       - run: |
           pyinstaller --onefile \
             --distpath ./dist \
-            --name "app_${env:GITHUB_REF_NAME}_windows_x86_64" \
+            --name "app_${GITHUB_REF_NAME}_windows_x86_64" \
             src/main.py
             
       - uses: actions/upload-artifact@v3
