@@ -933,10 +933,10 @@ class TVHeadendClient(QMainWindow):
         """Setup application paths for resources"""
         if getattr(sys, 'frozen', False):
             # Running as PyInstaller bundle
-            self.app_dir = "macos/tvhplayer" #Path(sys._MEIPASS)
+            self.app_dir = Path(sys._MEIPASS)
         else:
             # Running in development
-            self.app_dir = "macos/tvhplayer" #Path(os.path.dirname(os.path.abspath(__file__)))
+            self.app_dir = Path(os.path.dirname(os.path.abspath(__file__)))
             
         # Ensure icons directory exists
         self.icons_dir = self.app_dir / 'icons'
