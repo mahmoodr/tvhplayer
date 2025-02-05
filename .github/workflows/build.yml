@@ -22,14 +22,14 @@ jobs:
         run: |
           arch -${{ matrix.arch }} python -m pip install --upgrade pip
           arch -${{ matrix.arch }} pip install -r requirements.txt
-          arch -${{ matrix.arch }} pip install pyinstaller
+          
 
       - name: Build executable
         run: |
           arch -${{ matrix.arch }} pyinstaller --onefile \
             --distpath ./dist \
             --name "tvhplayer_macos_${{ matrix.arch }}" \
-            setup.py
+            macos/tvhplayer/tvhplayer.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
