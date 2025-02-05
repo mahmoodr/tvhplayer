@@ -927,7 +927,6 @@ class TVHeadendClient(QMainWindow):
         elif sys.platform == "darwin":
            self.media_player.set_nsobject(self.video_frame.winId().__int__())
     
-          
     
     def setup_paths(self):
         """Setup application paths for resources"""
